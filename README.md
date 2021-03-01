@@ -1,5 +1,5 @@
 # python_advanced_bom_creator
-A script made for Samaritan infrastructure issue #14. Uses [Cyclonedx-bom](https://github.com/CycloneDX/cyclonedx-python) to create bom.
+A script made for Samaritan infrastructure issue #14. Uses [Cyclonedx-bom](https://github.com/CycloneDX/cyclonedx-python) to create a Bill of Materials (bom).
 This is for projects that have not one, but multiple requirements scattered throughout the project.
 Cyclonedx is configured to work with one requirements.txt file in one directory. This script compiles
 all the requirements.txt files into one, and generates a bom.xml file which is the Software Bill Of Material
