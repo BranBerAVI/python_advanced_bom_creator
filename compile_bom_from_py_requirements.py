@@ -30,11 +30,12 @@ while(choice != 2):
 
     current_dir = os.getcwd()
 
-    requirement_list_contents = []
+    
 
     if(choice == 1):
         while(not os.path.isdir(dir_input)):
             dir_input = input("Enter the file path of your project: ")
+            requirement_list_contents = []
 
             if(not os.path.isdir(dir_input)):
                 print("Folder does not exist")
@@ -43,21 +44,26 @@ while(choice != 2):
                 for subdir, dirs, files in os.walk(dir_input):
                     for file in files:
                         if file.lower() == "requirements.txt":
-                            requirements_file_path = os.path.join(subdir, file)
-                            #print(requirements_file_path)
+                            requirements_file_path = os.path.join(subdir, file)   
+                                                    
                             requirements_file = open(requirements_file_path, "r")
-                            requirement_list_contents = list(set([*requirement_list_contents, *requirements_file.readlines()]))
+                            
+                            requirement_contents = requirements_file.readlines()
+                            
+                            requirement_list_contents = list(set([*requirement_list_contents, *requirement_contents]))
+                            requirements_file.close()
 
                 if(requirement_list_contents != []):
 
                     if(not os.path.isdir("Mother_Of_All_Requirements")):
                         os.mkdir("Mother_Of_All_Requirements")
 
-                    mother_of_all_reqs = open("Mother_Of_All_Requirements/requirements.txt", "w")
-                    mother_of_all_reqs.writelines(requirement_list_contents)
-
                     os.chdir("Mother_Of_All_Requirements")
-                    print(os.getcwd())
+
+                    mother_of_all_reqs = open("requirements.txt", "w")
+                    mother_of_all_reqs.writelines(requirement_list_contents)
+                    mother_of_all_reqs.close()
+
                     subprocess.run(["cyclonedx-py", "-o", "bom.xml"], shell=True)
                     os.chdir(current_dir)
 
